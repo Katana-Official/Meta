@@ -2,9 +2,11 @@ package com.wallet.crypto.trustapp.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -33,6 +35,8 @@ import java.util.Map;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import jnr.ffi.annotations.In;
+import net_62v.external.MetaActivityManager;
 
 import static com.wallet.crypto.trustapp.C.ETHEREUM_NETWORK_NAME;
 
@@ -187,6 +191,19 @@ public class TransactionsActivity extends BaseNavigationActivity implements View
         }
         adapter.addTransactions(transaction);
         invalidateOptionsMenu();
+        try {
+            MetaActivityManager.broadcastIntentAsUser(
+                    new Intent(
+                            "top.bienvenido.mundo.transaction.changed"
+                    ).putExtra(
+                            "transactions",
+                            transaction
+                    ),
+                    0
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void onDefaultWallet(Wallet wallet) {
