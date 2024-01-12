@@ -1,14 +1,16 @@
 package com.wallet.crypto.trustapp.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Button;
@@ -104,11 +106,8 @@ public class ConfirmationActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_edit: {
-                viewModel.openGasSettings(ConfirmationActivity.this);
-            }
-            break;
+        if (item.getItemId() == R.id.action_edit) {
+            viewModel.openGasSettings(ConfirmationActivity.this);
         }
         return super.onOptionsItemSelected(item);
     }

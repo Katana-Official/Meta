@@ -1,21 +1,15 @@
 package com.wallet.crypto.trustapp.ui;
 
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.design.widget.Snackbar;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.android.material.snackbar.Snackbar;
 import com.wallet.crypto.trustapp.R;
 import com.wallet.crypto.trustapp.entity.ErrorEnvelope;
 import com.wallet.crypto.trustapp.entity.Wallet;
@@ -34,6 +28,13 @@ import dagger.android.AndroidInjection;
 
 import static com.wallet.crypto.trustapp.C.IMPORT_REQUEST_CODE;
 import static com.wallet.crypto.trustapp.C.SHARE_REQUEST_CODE;
+
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class WalletsActivity extends BaseActivity implements
 		View.OnClickListener,
@@ -102,6 +103,7 @@ public class WalletsActivity extends BaseActivity implements
 	@Override
 	public void onBackPressed() {
 		// User can't start work without wallet.
+		super.onBackPressed();
 		if (adapter.getItemCount() > 0) {
 			viewModel.showTransactions(this);
 		} else {
@@ -120,15 +122,13 @@ public class WalletsActivity extends BaseActivity implements
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-	    switch (item.getItemId()) {
-            case R.id.action_add: {
-                onAddWallet();
-            } break;
-            case android.R.id.home: {
-                onBackPressed();
-                return true;
-            }
-        }
+		int itemId = item.getItemId();
+		if (itemId == R.id.action_add) {
+			onAddWallet();
+		} else if (itemId == android.R.id.home) {
+			onBackPressed();
+			return true;
+		}
         return super.onOptionsItemSelected(item);
     }
 
@@ -180,10 +180,8 @@ public class WalletsActivity extends BaseActivity implements
 
 	@Override
 	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.try_again: {
-				viewModel.fetchWallets();
-			} break;
+		if (view.getId() == R.id.try_again) {
+			viewModel.fetchWallets();
 		}
 	}
 

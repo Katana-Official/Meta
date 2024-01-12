@@ -12,12 +12,12 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasFragmentInjector;
+import dagger.android.HasAndroidInjector;
 
-public class SettingsActivity extends BaseActivity implements HasFragmentInjector {
+public class SettingsActivity extends BaseActivity implements HasAndroidInjector {
 
     @Inject
-    DispatchingAndroidInjector<Fragment> fragmentInjector;
+    DispatchingAndroidInjector<Object> fragmentInjector;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,11 +44,12 @@ public class SettingsActivity extends BaseActivity implements HasFragmentInjecto
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         new TransactionsRouter().open(this, true);
     }
 
     @Override
-    public AndroidInjector<android.app.Fragment> fragmentInjector() {
+    public AndroidInjector<Object> androidInjector() {
         return fragmentInjector;
     }
 }

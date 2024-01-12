@@ -8,7 +8,6 @@ import com.wallet.crypto.trustapp.service.AccountKeystoreService;
 import com.wallet.crypto.trustapp.service.BlockExplorerClientType;
 
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.Web3jFactory;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.response.EthGetTransactionCount;
 import org.web3j.protocol.core.methods.response.EthSendTransaction;
@@ -50,7 +49,13 @@ public class TransactionRepository implements TransactionRepositoryType {
             if (transactions != null && transactions.length > 0) {
                 e.onNext(transactions);
             }
-            transactions = blockExplorerClient.fetchTransactions(wallet.address).blockingFirst();
+            try{
+				transactions = blockExplorerClient.fetchTransactions(wallet.address).blockingFirst();
+			}catch (Exception ex)
+			{
+				ex.printStackTrace();
+				transactions = new Transaction[0];
+			}
             transactionLocalSource.clear();
             transactionLocalSource.putTransactions(wallet, transactions);
             e.onNext(transactions);
@@ -74,7 +79,7 @@ public class TransactionRepository implements TransactionRepositoryType {
 
 	@Override
 	public Single<String> createTransaction(Wallet from, String toAddress, BigInteger subunitAmount, BigInteger gasPrice, BigInteger gasLimit, byte[] data, String password) {
-		final Web3j web3j = Web3jFactory.build(new HttpService(networkRepository.getDefaultNetwork().rpcServerUrl));
+		final Web3j web3j = Web3j.build(new HttpService(networkRepository.getDefaultNetwork().rpcServerUrl));
 
 		return Single.fromCallable(() -> {
 			EthGetTransactionCount ethGetTransactionCount = web3j

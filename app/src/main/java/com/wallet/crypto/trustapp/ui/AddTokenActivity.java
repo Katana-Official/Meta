@@ -1,15 +1,16 @@
 package com.wallet.crypto.trustapp.ui;
 
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.lifecycle.ViewModelProviders;
+
+import com.google.android.material.textfield.TextInputLayout;
 import com.wallet.crypto.trustapp.R;
 import com.wallet.crypto.trustapp.entity.Address;
 import com.wallet.crypto.trustapp.entity.ErrorEnvelope;
@@ -82,10 +83,8 @@ public class AddTokenActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.save: {
-                onSave();
-            } break;
+        if (v.getId() == R.id.save) {
+            onSave();
         }
     }
 

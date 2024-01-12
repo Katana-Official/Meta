@@ -2,8 +2,6 @@ package com.wallet.crypto.trustapp.widget;
 
 import android.content.Context;
 import android.net.Uri;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -16,6 +14,9 @@ import static com.wallet.crypto.trustapp.C.CHANGELLY_REF_ID;
 import static com.wallet.crypto.trustapp.C.COINBASE_WIDGET_CODE;
 import static com.wallet.crypto.trustapp.C.ETH_SYMBOL;
 import static com.wallet.crypto.trustapp.C.SHAPESHIFT_KEY;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
 
 public class DepositView extends FrameLayout implements View.OnClickListener {
 
@@ -68,21 +69,24 @@ public class DepositView extends FrameLayout implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        Uri uri;
-        switch (v.getId()) {
-            case R.id.action_shapeshift: {
-                uri = shapeshiftUri.buildUpon()
-                        .appendQueryParameter("destination", wallet.address).build();
-            } break;
-            case R.id.action_changelly: {
-                uri = changellyteUri.buildUpon()
-                        .appendQueryParameter("address", wallet.address).build();
-            } break;
-            default:
-            case R.id.action_coinbase: {
-                uri = coinbaseri.buildUpon()
-                        .appendQueryParameter("address", wallet.address).build();
-            } break;
+        Uri uri = null;
+        int id = v.getId();
+        if(id == R.id.action_shapeshift)
+        {
+            uri = shapeshiftUri.buildUpon()
+                    .appendQueryParameter("destination", wallet.address).build();
+        }
+        else if(id == R.id.action_changelly)
+        {
+            uri = changellyteUri.buildUpon()
+                    .appendQueryParameter("address", wallet.address).build();
+
+        }
+        else if(id == R.id.action_coinbase)
+        {
+
+            uri = coinbaseri.buildUpon()
+                    .appendQueryParameter("address", wallet.address).build();
         }
         if (onDepositClickListener != null) {
             onDepositClickListener.onDepositClick(v, uri);

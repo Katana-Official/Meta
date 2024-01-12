@@ -1,8 +1,9 @@
 package com.wallet.crypto.trustapp.viewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.wallet.crypto.trustapp.entity.NetworkInfo;
 import com.wallet.crypto.trustapp.entity.Token;
@@ -12,7 +13,6 @@ import com.wallet.crypto.trustapp.interact.FindDefaultNetworkInteract;
 import com.wallet.crypto.trustapp.router.AddTokenRouter;
 import com.wallet.crypto.trustapp.router.SendTokenRouter;
 import com.wallet.crypto.trustapp.router.TransactionsRouter;
-import com.wallet.crypto.trustapp.ui.TokensActivity;
 
 public class TokensViewModel extends BaseViewModel {
     private final MutableLiveData<NetworkInfo> defaultNetwork = new MutableLiveData<>();

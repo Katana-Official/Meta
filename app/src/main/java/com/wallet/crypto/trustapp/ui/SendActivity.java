@@ -1,11 +1,8 @@
 package com.wallet.crypto.trustapp.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TextInputLayout;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,17 +10,20 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.vision.barcode.Barcode;
+import com.google.android.material.textfield.TextInputLayout;
 import com.wallet.crypto.trustapp.C;
 import com.wallet.crypto.trustapp.R;
+import com.wallet.crypto.trustapp.entity.Address;
 import com.wallet.crypto.trustapp.ui.barcode.BarcodeCaptureActivity;
 import com.wallet.crypto.trustapp.util.BalanceUtils;
 import com.wallet.crypto.trustapp.util.QRURLParser;
 import com.wallet.crypto.trustapp.viewmodel.SendViewModel;
 import com.wallet.crypto.trustapp.viewmodel.SendViewModelFactory;
-
-import org.ethereum.geth.Address;
 
 import java.math.BigInteger;
 
@@ -98,11 +98,8 @@ public class SendActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_next: {
-                onNext();
-            }
-            break;
+        if (item.getItemId() == R.id.action_next) {
+            onNext();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -159,8 +156,7 @@ public class SendActivity extends BaseActivity {
 
     boolean isAddressValid(String address) {
         try {
-            new Address(address);
-            return true;
+            return Address.isAddress(address);
         } catch (Exception e) {
             return false;
         }

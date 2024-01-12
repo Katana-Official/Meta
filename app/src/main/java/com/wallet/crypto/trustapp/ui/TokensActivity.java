@@ -1,12 +1,7 @@
 package com.wallet.crypto.trustapp.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +19,12 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 
 import static com.wallet.crypto.trustapp.C.Key.WALLET;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class TokensActivity extends BaseActivity implements View.OnClickListener {
     @Inject
@@ -73,19 +74,18 @@ public class TokensActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_add: {
-                viewModel.showAddToken(this);
-            } break;
-            case android.R.id.home: {
-                viewModel.showTransactions(this, true);
-            }
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_add) {
+            viewModel.showAddToken(this);
+        } else if (itemId == android.R.id.home) {
+            viewModel.showTransactions(this, true);
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onBackPressed() {
+        super.onBackPressed();
         viewModel.showTransactions(this, true);
     }
 
@@ -114,10 +114,8 @@ public class TokensActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.try_again: {
-                viewModel.fetchTokens();
-            } break;
+        if (view.getId() == R.id.try_again) {
+            viewModel.fetchTokens();
         }
     }
 }

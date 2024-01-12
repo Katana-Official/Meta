@@ -1,6 +1,6 @@
 package com.wallet.crypto.trustapp.entity;
 
-import android.support.annotation.Nullable;
+import androidx.annotation.Nullable;
 
 import com.wallet.crypto.trustapp.C;
 

@@ -1,9 +1,10 @@
 package com.wallet.crypto.trustapp.viewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.net.Uri;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.wallet.crypto.trustapp.entity.NetworkInfo;
 import com.wallet.crypto.trustapp.entity.Transaction;
@@ -78,8 +79,13 @@ public class TransactionsViewModel extends BaseViewModel {
     protected void onCleared() {
         super.onCleared();
 
-        transactionDisposable.dispose();
-        balanceDisposable.dispose();
+        try{
+            transactionDisposable.dispose();
+            balanceDisposable.dispose();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 
     public LiveData<NetworkInfo> defaultNetwork() {

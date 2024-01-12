@@ -1,10 +1,11 @@
 package com.wallet.crypto.trustapp.widget;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
 import android.view.LayoutInflater;
 import android.widget.EditText;
 import android.widget.FrameLayout;
+
+import androidx.annotation.NonNull;
 
 import com.wallet.crypto.trustapp.R;
 

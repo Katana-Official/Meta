@@ -1,8 +1,9 @@
 package com.wallet.crypto.trustapp.ui.widget.adapter;
 
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
+
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.wallet.crypto.trustapp.R;
 import com.wallet.crypto.trustapp.entity.Wallet;

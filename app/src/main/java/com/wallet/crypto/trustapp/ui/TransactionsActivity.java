@@ -2,24 +2,17 @@ package com.wallet.crypto.trustapp.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetDialog;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.wallet.crypto.trustapp.C;
 import com.wallet.crypto.trustapp.R;
 import com.wallet.crypto.trustapp.entity.ErrorEnvelope;
@@ -42,7 +35,14 @@ import javax.inject.Inject;
 import dagger.android.AndroidInjection;
 
 import static com.wallet.crypto.trustapp.C.ETHEREUM_NETWORK_NAME;
-import static com.wallet.crypto.trustapp.C.ETH_SYMBOL;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 public class TransactionsActivity extends BaseNavigationActivity implements View.OnClickListener {
 
@@ -128,44 +128,37 @@ public class TransactionsActivity extends BaseNavigationActivity implements View
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings: {
-                viewModel.showSettings(this);
-            } break;
-            case R.id.action_deposit: {
-                openExchangeDialog();
-            } break;
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_settings) {
+            viewModel.showSettings(this);
+        } else if (itemId == R.id.action_deposit) {
+            openExchangeDialog();
         }
         return super.onOptionsItemSelected(item);
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.try_again: {
-                viewModel.fetchTransactions();
-            } break;
-            case R.id.action_buy: {
-                openExchangeDialog();
-            }
+        int id = view.getId();
+        if (id == R.id.try_again) {
+            viewModel.fetchTransactions();
+        } else if (id == R.id.action_buy) {
+            openExchangeDialog();
         }
     }
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_my_address: {
-                viewModel.showMyAddress(this);
-                return true;
-            }
-            case R.id.action_my_tokens: {
-                viewModel.showTokens(this);
-                return true;
-            }
-            case R.id.action_send: {
-                viewModel.showSend(this);
-                return true;
-            }
+        int itemId = item.getItemId();
+        if (itemId == R.id.action_my_address) {
+            viewModel.showMyAddress(this);
+            return true;
+        } else if (itemId == R.id.action_my_tokens) {
+            viewModel.showTokens(this);
+            return true;
+        } else if (itemId == R.id.action_send) {
+            viewModel.showSend(this);
+            return true;
         }
         return false;
     }

@@ -17,7 +17,6 @@ import org.web3j.abi.datatypes.Function;
 import org.web3j.abi.datatypes.Type;
 import org.web3j.abi.datatypes.generated.Uint256;
 import org.web3j.protocol.Web3j;
-import org.web3j.protocol.Web3jFactory;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.core.methods.request.Transaction;
 import org.web3j.protocol.http.HttpService;
@@ -55,14 +54,18 @@ public class TokenRepository implements TokenRepositoryType {
     }
 
     private void buildWeb3jClient(NetworkInfo defaultNetwork) {
-        web3j = Web3jFactory.build(new HttpService(defaultNetwork.rpcServerUrl, httpClient, false));
+        web3j = Web3j.build(new HttpService(defaultNetwork.rpcServerUrl, httpClient, false));
     }
-
+    private String filterAddress(String origin)
+    {
+        if(origin.startsWith("0x")) return origin;
+        return "0x" + origin;
+    }
     @Override
     public Observable<Token[]> fetch(String walletAddress) {
         return Observable.create(e -> {
             NetworkInfo defaultNetwork = ethereumNetworkRepository.getDefaultNetwork();
-            Wallet wallet = new Wallet(walletAddress);
+            Wallet wallet = new Wallet(filterAddress(walletAddress));
             Token[] tokens = tokenLocalSource.fetch(defaultNetwork, wallet)
                     .map(items -> {
                         int len = items.length;
@@ -85,7 +88,7 @@ public class TokenRepository implements TokenRepositoryType {
                                 try {
                                     balance = getBalance(wallet, items[i]);
                                 } catch (Exception e1) {
-                                    Log.d("TOKEN", "Err", e1);
+                                    Log.d("TOKENCACHE", "Err", e1);
                                     /* Quietly */
                                 }
                                 result[i] = new Token(items[i], balance);
@@ -101,7 +104,7 @@ public class TokenRepository implements TokenRepositoryType {
         return tokenLocalSource.put(
                 ethereumNetworkRepository.getDefaultNetwork(),
                 wallet,
-                new TokenInfo(address, "", symbol, decimals));
+                new TokenInfo(address, "TOKEN", symbol, decimals));
     }
 
     private void updateTokenInfoCache(NetworkInfo defaultNetwork, Wallet wallet) {
@@ -125,7 +128,7 @@ public class TokenRepository implements TokenRepositoryType {
     }
 
     private BigDecimal getBalance(Wallet wallet, TokenInfo tokenInfo) throws Exception {
-        org.web3j.abi.datatypes.Function function = balanceOf(wallet.address);
+        org.web3j.abi.datatypes.Function function = balanceOf(filterAddress(wallet.address));
         String responseValue = callSmartContractFunction(function, tokenInfo.address, wallet);
 
         List<Type> response = FunctionReturnDecoder.decode(
@@ -148,10 +151,14 @@ public class TokenRepository implements TokenRepositoryType {
             org.web3j.abi.datatypes.Function function, String contractAddress, Wallet wallet) throws Exception {
         String encodedFunction = FunctionEncoder.encode(function);
 
-        org.web3j.protocol.core.methods.response.EthCall response = web3j.ethCall(
-                Transaction.createEthCallTransaction(wallet.address, contractAddress, encodedFunction),
-                DefaultBlockParameterName.LATEST)
-                .sendAsync().get();
+        org.web3j.protocol.core.methods.response.EthCall response = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.N) {
+            response = web3j.ethCall(
+                    Transaction.createEthCallTransaction(filterAddress(wallet.address), contractAddress, encodedFunction),
+                    DefaultBlockParameterName.LATEST)
+                    .sendAsync().get();
+        }
+        else return "";
 
         return response.getValue();
     }

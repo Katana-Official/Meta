@@ -1,10 +1,11 @@
 package com.wallet.crypto.trustapp.viewmodel;
 
 import android.app.Activity;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 import android.content.Intent;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.wallet.crypto.trustapp.entity.GasSettings;
 import com.wallet.crypto.trustapp.entity.Wallet;

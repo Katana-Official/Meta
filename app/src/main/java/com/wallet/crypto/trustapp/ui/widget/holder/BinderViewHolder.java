@@ -2,12 +2,13 @@ package com.wallet.crypto.trustapp.ui.widget.holder;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.recyclerview.widget.RecyclerView;
 
 public abstract class BinderViewHolder<T> extends RecyclerView.ViewHolder {
 	public BinderViewHolder(int resId, ViewGroup parent) {

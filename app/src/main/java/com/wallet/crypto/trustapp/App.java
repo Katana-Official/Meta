@@ -1,25 +1,31 @@
 package com.wallet.crypto.trustapp;
 
-import android.app.Activity;
-import android.support.multidex.MultiDexApplication;
+import android.content.Context;
+
+import androidx.multidex.MultiDexApplication;
 
 import com.wallet.crypto.trustapp.di.DaggerAppComponent;
+
+import org.jetbrains.annotations.NotNull;
 
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
-import dagger.android.HasActivityInjector;
+import dagger.android.HasAndroidInjector;
 import io.realm.Realm;
 
-public class App extends MultiDexApplication implements HasActivityInjector {
+public class App extends MultiDexApplication implements HasAndroidInjector {
 
 	@Inject
-	DispatchingAndroidInjector<Activity> dispatchingAndroidInjector;
+	DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
+    @NotNull
+    public static Context context;
 
-	@Override
+    @Override
 	public void onCreate() {
 		super.onCreate();
+		context = this;
         Realm.init(this);
         DaggerAppComponent
 				.builder()
@@ -29,8 +35,7 @@ public class App extends MultiDexApplication implements HasActivityInjector {
 	}
 
 	@Override
-	public AndroidInjector<Activity> activityInjector() {
+	public AndroidInjector<Object> androidInjector() {
 		return dispatchingAndroidInjector;
 	}
-
 }

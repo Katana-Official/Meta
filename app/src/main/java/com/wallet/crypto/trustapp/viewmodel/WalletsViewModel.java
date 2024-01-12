@@ -1,8 +1,6 @@
 package com.wallet.crypto.trustapp.viewmodel;
 
 import android.app.Activity;
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
 import android.content.Context;
 
 import com.wallet.crypto.trustapp.C;
@@ -18,6 +16,9 @@ import com.wallet.crypto.trustapp.router.ImportWalletRouter;
 import com.wallet.crypto.trustapp.router.TransactionsRouter;
 
 import static com.wallet.crypto.trustapp.C.IMPORT_REQUEST_CODE;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 public class WalletsViewModel extends BaseViewModel {
 

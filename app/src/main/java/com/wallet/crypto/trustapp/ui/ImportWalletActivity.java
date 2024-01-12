@@ -2,16 +2,18 @@ package com.wallet.crypto.trustapp.ui;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.util.Pair;
-import android.support.v4.view.ViewPager;
+
+import androidx.annotation.Nullable;
+import androidx.core.util.Pair;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProviders;
+import androidx.viewpager.widget.ViewPager;
+
 import android.widget.ProgressBar;
 
+import com.google.android.material.tabs.TabLayout;
 import com.wallet.crypto.trustapp.C;
 import com.wallet.crypto.trustapp.R;
 import com.wallet.crypto.trustapp.entity.ErrorEnvelope;

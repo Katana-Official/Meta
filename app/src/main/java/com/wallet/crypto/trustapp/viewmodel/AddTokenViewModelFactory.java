@@ -1,8 +1,8 @@
 package com.wallet.crypto.trustapp.viewmodel;
 
-import android.arch.lifecycle.ViewModel;
-import android.arch.lifecycle.ViewModelProvider;
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
+import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.wallet.crypto.trustapp.interact.AddTokenInteract;
 import com.wallet.crypto.trustapp.interact.FindDefaultWalletInteract;

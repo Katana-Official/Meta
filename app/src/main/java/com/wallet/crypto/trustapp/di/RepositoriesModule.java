@@ -45,8 +45,8 @@ public class RepositoriesModule {
 	@Singleton
 	@Provides
 	AccountKeystoreService provideAccountKeyStoreService(Context context) {
-        File file = new File(context.getFilesDir(), "keystore/keystore");
-		return new GethKeystoreAccountService(file);
+//        File file = new File(context.getFilesDir(), "keystore/keystore");
+		return new GethKeystoreAccountService();
 	}
 
 	@Singleton

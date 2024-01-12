@@ -1,10 +1,11 @@
 package com.wallet.crypto.trustapp.viewmodel;
 
-import android.support.annotation.MenuRes;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
 import android.view.MenuItem;
 
+import androidx.annotation.MenuRes;
+import androidx.annotation.NonNull;
+
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.wallet.crypto.trustapp.R;
 import com.wallet.crypto.trustapp.ui.BaseActivity;
 

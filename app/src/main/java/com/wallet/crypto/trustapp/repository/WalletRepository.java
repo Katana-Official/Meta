@@ -3,14 +3,13 @@ package com.wallet.crypto.trustapp.repository;
 import com.wallet.crypto.trustapp.entity.Wallet;
 import com.wallet.crypto.trustapp.service.AccountKeystoreService;
 
-import org.web3j.protocol.Web3jFactory;
+import org.web3j.protocol.Web3j;
 import org.web3j.protocol.core.DefaultBlockParameterName;
 import org.web3j.protocol.http.HttpService;
 
 import java.math.BigInteger;
 
 import io.reactivex.Completable;
-import io.reactivex.Maybe;
 import io.reactivex.Single;
 import io.reactivex.schedulers.Schedulers;
 import okhttp3.OkHttpClient;
@@ -27,7 +26,7 @@ public class WalletRepository implements WalletRepositoryType {
 			PreferenceRepositoryType preferenceRepositoryType,
 			AccountKeystoreService accountKeystoreService,
 			EthereumNetworkRepositoryType networkRepository) {
-	    this.httpClient = okHttpClient;
+		this.httpClient = okHttpClient;
 		this.preferenceRepositoryType = preferenceRepositoryType;
 		this.accountKeystoreService = accountKeystoreService;
 		this.networkRepository = networkRepository;
@@ -43,7 +42,15 @@ public class WalletRepository implements WalletRepositoryType {
 		return fetchWallets()
 				.flatMap(accounts -> {
 					for (Wallet wallet : accounts) {
-						if (wallet.sameAddress(address)) {
+						String v = address;
+						if (wallet.sameAddress(v)) {
+							return Single.just(wallet);
+						}
+						if(!address.startsWith("0x"))
+						{
+							v = "0x" + address;
+						}
+						if (wallet.sameAddress(v)) {
 							return Single.just(wallet);
 						}
 					}
@@ -90,7 +97,7 @@ public class WalletRepository implements WalletRepositoryType {
 
 	@Override
 	public Single<BigInteger> balanceInWei(Wallet wallet) {
-		return Single.fromCallable(() -> Web3jFactory
+		return Single.fromCallable(() -> Web3j
 					.build(new HttpService(networkRepository.getDefaultNetwork().rpcServerUrl, httpClient, false))
 					.ethGetBalance(wallet.address, DefaultBlockParameterName.LATEST)
 					.send()

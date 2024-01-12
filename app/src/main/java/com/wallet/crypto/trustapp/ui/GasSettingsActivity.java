@@ -1,14 +1,15 @@
 package com.wallet.crypto.trustapp.ui;
 
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SeekBar;
 import android.widget.TextView;
+
+import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 
 import com.wallet.crypto.trustapp.C;
 import com.wallet.crypto.trustapp.R;
@@ -162,15 +163,12 @@ public class GasSettingsActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_save: {
-                Intent intent = new Intent();
-                intent.putExtra(C.EXTRA_GAS_PRICE, viewModel.gasPrice().getValue().toString());
-                intent.putExtra(C.EXTRA_GAS_LIMIT, viewModel.gasLimit().getValue().toString());
-                setResult(RESULT_OK, intent);
-                finish();
-            }
-            break;
+        if (item.getItemId() == R.id.action_save) {
+            Intent intent = new Intent();
+            intent.putExtra(C.EXTRA_GAS_PRICE, viewModel.gasPrice().getValue().toString());
+            intent.putExtra(C.EXTRA_GAS_LIMIT, viewModel.gasLimit().getValue().toString());
+            setResult(RESULT_OK, intent);
+            finish();
         }
         return super.onOptionsItemSelected(item);
     }

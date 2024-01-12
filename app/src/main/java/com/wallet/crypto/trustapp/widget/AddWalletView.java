@@ -1,16 +1,17 @@
 package com.wallet.crypto.trustapp.widget;
 
 import android.content.Context;
-import android.support.annotation.LayoutRes;
-import android.support.annotation.NonNull;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.annotation.LayoutRes;
+import androidx.annotation.NonNull;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
 
 import com.wallet.crypto.trustapp.R;
 
@@ -43,18 +44,16 @@ public class AddWalletView extends FrameLayout implements View.OnClickListener {
 
 	@Override
 	public void onClick(View view) {
-		switch (view.getId()) {
-			case R.id.new_account_action: {
-				if (onNewWalletClickListener != null) {
-					onNewWalletClickListener.onNewWallet(view);
-				}
-			} break;
-			case R.id.import_account_action: {
-				if (onImportWalletClickListener != null) {
-					onImportWalletClickListener.onImportWallet(view);
-				}
-			} break;
-		}
+        int id = view.getId();
+        if (id == R.id.new_account_action) {
+            if (onNewWalletClickListener != null) {
+                onNewWalletClickListener.onNewWallet(view);
+            }
+        } else if (id == R.id.import_account_action) {
+            if (onImportWalletClickListener != null) {
+                onImportWalletClickListener.onImportWallet(view);
+            }
+        }
 	}
 	
 	public void setOnNewWalletClickListener(OnNewWalletClickListener onNewWalletClickListener) {

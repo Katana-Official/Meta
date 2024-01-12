@@ -1,10 +1,11 @@
 package com.wallet.crypto.trustapp.ui;
 
-import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.support.annotation.Nullable;
-import android.support.v4.content.ContextCompat;
+
+import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProviders;
+
 import android.text.TextUtils;
 import android.text.format.DateFormat;
 import android.view.Menu;

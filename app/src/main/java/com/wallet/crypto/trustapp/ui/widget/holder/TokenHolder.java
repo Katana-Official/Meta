@@ -1,18 +1,18 @@
 package com.wallet.crypto.trustapp.ui.widget.holder;
 
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.wallet.crypto.trustapp.R;
 import com.wallet.crypto.trustapp.entity.Token;
 import com.wallet.crypto.trustapp.ui.widget.OnTokenClickListener;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 public class TokenHolder extends BinderViewHolder<Token> implements View.OnClickListener {
 

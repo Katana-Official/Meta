@@ -49,6 +49,21 @@ public class RealmTokenSource implements TokenLocalSource {
         });
     }
 
+    @Override
+    public int size(NetworkInfo networkInfo, Wallet wallet) {
+        try {
+            Realm realm = getRealmInstance(networkInfo, wallet);
+            RealmResults<RealmTokenInfo> realmItems = realm.where(RealmTokenInfo.class)
+                    .sort("addedTime", Sort.ASCENDING)
+                    .findAll();
+            return realmItems.size();
+        }catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
     private Realm getRealmInstance(NetworkInfo networkInfo, Wallet wallet) {
         RealmConfiguration config = new RealmConfiguration.Builder()
                 .name(wallet.address + "-" + networkInfo.name + ".realm")

@@ -3,23 +3,23 @@
 buildscript {
     repositories {
         google()
-        jcenter()
         mavenCentral()
         maven { url 'https://jitpack.io' }
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.2.0'
-        classpath "io.realm:realm-gradle-plugin:4.3.1"
+        classpath 'com.android.tools.build:gradle:8.2.1'
+        classpath "io.realm:realm-gradle-plugin:10.17.0"
+        classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.0-Beta2'
     }
 }
 
 allprojects {
     repositories {
-        jcenter()
         google()
         mavenCentral()
         maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.scijava.org/content/repositories/public/' }
     }
 }
 

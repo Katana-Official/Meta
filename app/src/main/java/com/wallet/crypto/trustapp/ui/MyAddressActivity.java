@@ -6,7 +6,6 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,6 +26,8 @@ import dagger.android.AndroidInjection;
 
 import static com.wallet.crypto.trustapp.C.Key.WALLET;
 
+import androidx.annotation.Nullable;
+
 public class MyAddressActivity extends BaseActivity implements View.OnClickListener {
 
     private static final float QR_IMAGE_WIDTH_RATIO = 0.9f;
@@ -36,6 +37,11 @@ public class MyAddressActivity extends BaseActivity implements View.OnClickListe
     protected EthereumNetworkRepositoryType ethereumNetworkRepository;
 
     private Wallet wallet;
+    private String filterAddress(String origin)
+    {
+        if(origin.startsWith("0x")) return origin;
+        return "0x" + origin;
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,10 +57,13 @@ public class MyAddressActivity extends BaseActivity implements View.OnClickListe
         NetworkInfo networkInfo = ethereumNetworkRepository.getDefaultNetwork();
         String suggestion = getString(R.string.suggestion_this_is_your_address, networkInfo.name);
         ((TextView) findViewById(R.id.address_suggestion)).setText(suggestion);
-        ((TextView) findViewById(R.id.address)).setText(wallet.address);
+        ((TextView) findViewById(R.id.address)).setText(filterAddress(wallet.address));
         findViewById(R.id.copy_action).setOnClickListener(this);
-        final Bitmap qrCode = createQRImage(wallet.address);
+        final Bitmap qrCode = createQRImage(filterAddress(wallet.address));
         ((ImageView) findViewById(R.id.qr_image)).setImageBitmap(qrCode);
+        findViewById(R.id.qr_image).setOnClickListener((v)-> {
+            Toast.makeText(this, "Please take a screenshot to save.", Toast.LENGTH_SHORT).show();
+        });
     }
 
     private Bitmap createQRImage(String address) {

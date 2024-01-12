@@ -1,7 +1,8 @@
 package com.wallet.crypto.trustapp.viewmodel;
 
-import android.arch.lifecycle.LiveData;
-import android.arch.lifecycle.MutableLiveData;
+
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
 
 import com.wallet.crypto.trustapp.entity.Wallet;
 import com.wallet.crypto.trustapp.interact.ImportWalletInteract;

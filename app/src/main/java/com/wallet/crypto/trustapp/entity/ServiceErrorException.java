@@ -1,6 +1,8 @@
 package com.wallet.crypto.trustapp.entity;
 
-import android.support.annotation.Nullable;
+//import android.support.annotation.Nullable;
+
+import androidx.annotation.Nullable;
 
 public class ServiceErrorException extends Exception {
 

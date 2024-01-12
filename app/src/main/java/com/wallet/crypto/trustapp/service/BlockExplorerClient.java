@@ -17,6 +17,7 @@ import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
+import retrofit2.http.Headers;
 import retrofit2.http.Query;
 
 public class BlockExplorerClient implements BlockExplorerClientType {
@@ -49,10 +50,16 @@ public class BlockExplorerClient implements BlockExplorerClientType {
 				.create(EtherScanApiClient.class);
 	}
 
+	private String filterAddress(String origin)
+	{
+		if(origin.startsWith("0x")) return origin;
+		return "0x" + origin;
+	}
+
 	@Override
 	public Observable<Transaction[]> fetchTransactions(String address) {
 		return etherScanApiClient
-				.fetchTransactions(address)
+				.fetchTransactions(filterAddress(address))
 				.lift(apiError(gson))
 				.map(r -> r.docs)
 				.subscribeOn(Schedulers.io());
@@ -67,7 +74,8 @@ public class BlockExplorerClient implements BlockExplorerClientType {
 	}
 
 	private interface EtherScanApiClient {
-		@GET("/transactions?limit=50") // TODO: startBlock - it's pagination. Not work now
+		@Headers("Ok-Access-Key:cf73662e-fdeb-4631-8a93-18d277995e31")
+		@GET("/api/v5/explorer/address/address-summary?chainShortName=eth") // TODO: startBlock - it's pagination. Not work now
 		Observable<Response<EtherScanResponse>> fetchTransactions(
 				@Query("address") String address);
 	}
@@ -89,7 +97,12 @@ public class BlockExplorerClient implements BlockExplorerClientType {
             return new DisposableObserver<Response<T>>() {
                 @Override
                 public void onNext(Response<T> response) {
-                    observer.onNext(response.body());
+                    try{
+						observer.onNext(response.body());
+					}catch (Exception e)
+					{
+						e.printStackTrace();
+					}
                     observer.onComplete();
                 }
 
