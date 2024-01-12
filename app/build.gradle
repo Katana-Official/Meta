@@ -71,6 +71,7 @@ project.ext {
 }
 
 dependencies {
+    implementation fileTree(include: ['*.aar'], dir: 'libs')
     // Etherium client
     implementation "org.web3j:core:$project.web3jVersion"
     // Http client

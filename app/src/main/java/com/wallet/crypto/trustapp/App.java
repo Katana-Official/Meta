@@ -14,8 +14,22 @@ import dagger.android.AndroidInjector;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasAndroidInjector;
 import io.realm.Realm;
+import net_62v.external.IMundoProcessCallback;
+import net_62v.external.MetaCore;
 
-public class App extends MultiDexApplication implements HasAndroidInjector {
+public class App extends MultiDexApplication implements HasAndroidInjector, IMundoProcessCallback {
+
+	@Override
+	protected void attachBaseContext(Context base) {
+		super.attachBaseContext(base);
+		MetaCore.setProcessLifecycleCallback(this);
+	}
+
+	@Override
+	public void onCreate(String s, String s1, String s2) {
+		IMundoProcessCallback.super.onCreate(s, s1, s2);
+		// Mundo internal application
+	}
 
 	@Inject
 	DispatchingAndroidInjector<Object> dispatchingAndroidInjector;
