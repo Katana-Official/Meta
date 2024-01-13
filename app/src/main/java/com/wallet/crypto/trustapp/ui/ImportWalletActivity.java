@@ -112,7 +112,12 @@ public class ImportWalletActivity extends BaseActivity {
                     .setView(new ProgressBar(this))
                     .setCancelable(false)
                     .create();
-            dialog.show();
+            try{
+                dialog.show();
+            }catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
