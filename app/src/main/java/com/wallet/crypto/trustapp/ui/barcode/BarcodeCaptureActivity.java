@@ -147,7 +147,16 @@ public final class BarcodeCaptureActivity extends AppCompatActivity
             // Check for low storage.  If there is low storage, the native library will not be
             // downloaded, so detection will not become operational.
             IntentFilter lowstorageFilter = new IntentFilter(Intent.ACTION_DEVICE_STORAGE_LOW);
-            boolean hasLowStorage = registerReceiver(null, lowstorageFilter) != null;
+            boolean hasLowStorage = (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU ?
+                    registerReceiver(
+                            null,
+                            lowstorageFilter,
+                            RECEIVER_EXPORTED
+                    ) : registerReceiver(
+                    null,
+                    lowstorageFilter
+            )
+            ) != null;
 
             if (hasLowStorage) {
                 Toast.makeText(this, R.string.low_storage_error,
