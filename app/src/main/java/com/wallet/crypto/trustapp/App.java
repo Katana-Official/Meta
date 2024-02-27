@@ -1,8 +1,7 @@
 package com.wallet.crypto.trustapp;
 
+import android.app.Application;
 import android.content.Context;
-
-import androidx.multidex.MultiDexApplication;
 
 import com.wallet.crypto.trustapp.di.DaggerAppComponent;
 
@@ -17,7 +16,7 @@ import io.realm.Realm;
 import net_62v.external.IMundoProcessCallback;
 import net_62v.external.MetaCore;
 
-public class App extends MultiDexApplication implements HasAndroidInjector, IMundoProcessCallback {
+public class App extends Application implements HasAndroidInjector, IMundoProcessCallback {
 
 	@Override
 	protected void attachBaseContext(Context base) {
